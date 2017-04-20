@@ -98,14 +98,17 @@ class ProductTable extends Component {
                 rows.push(<ProductCategoryRow category={inventoryRow.category} key={inventoryRow.category}/>)
             }
             lastCategory = inventoryRow.category
+
+            const keyname = inventoryRow.category + inventoryRow.name
+
             rows.push(<ProductRow
                 product={inventoryRow}
-                key={inventoryRow.name}
+                key={keyname}
                 selectionTotal={this.state.selectionTotal}
                 onSelectionInput={this.handleSelectionInput}
             />)
         })
-        rows.push(<ProductPriceTotalRow selectionTotal={this.state.selectionTotal}/>)
+        rows.push(<ProductPriceTotalRow key="displayTotal" selectionTotal={this.state.selectionTotal}/>)
 
         return (
             <table>

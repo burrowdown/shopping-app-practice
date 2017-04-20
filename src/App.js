@@ -14,7 +14,8 @@ const INVENTORY = [
 class ProductRow extends Component {
 
     handleSelectionInputChange(e) {
-        this.props.onSelectionInput(e.target.value)
+        let key = this
+        this.props.onSelectionInput(key)
     }
 
     render() {
@@ -71,12 +72,14 @@ class ProductTable extends Component {
 
     handleSelectionInput(selection) {
 
+        console.log(selection)
+
         // TODO: make this actually do what I want
         let newTotal = this.state.selectionTotal + 1
         this.setState({
             selectionTotal: newTotal
         })
-        console.log(this.state)
+        // console.log(this.state)
 
 
     }

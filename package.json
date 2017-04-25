@@ -42,18 +42,18 @@
     "jest": "15.1.1",
     "jest-cli": "15.1.1",
     "react": "^0.14.7",
-    "react-addons-test-utils": "^0.14.7"
+    "react-addons-test-utils": "^0.14.7",
+    "yarn": "^0.22.0"
   },
   "dependencies": {
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-scripts": "^0.9.5"
   },
-
   "babel": {
-  "presets": ["es2015", "react"]
-}
-
-
-
+    "presets": [
+      "es2015",
+      "react"
+    ]
+  }
 }

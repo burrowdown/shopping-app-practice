@@ -1,5 +1,6 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Button } from 'react-bootstrap'
 
 export default class ProductRow extends Component {
   constructor (props) {
@@ -8,16 +9,19 @@ export default class ProductRow extends Component {
   }
 
   handleSelectionInputChange (e) {
-    const value = e.target.checked
     const price = this.props.product.price
-    this.props.onSelectionInput(value, price)
+    const button = e.target
+    this.props.onSelectionInput(button, price)
   }
 
   render () {
     if (this.props.product.stocked) {
       return (
         <tr>
-          <td><input type='checkbox' onChange={this.handleSelectionInputChange} /></td>
+          { /* TODO: Fix this function */ }
+          <td><Button onClick={this.handleSelectionInputChange} bsStyle={this.props.buttonStyle} bsSize='small' block>
+            Buy This
+          </Button></td>
           <td>{this.props.product.name}</td>
           <td>${this.props.product.price}</td>
         </tr>
@@ -25,7 +29,7 @@ export default class ProductRow extends Component {
     } else {
       return (
         <tr>
-          <td />
+          <td><Button disabled bsSize='small' block>Unavailable</Button></td>
           <td><span style={{color: 'red'}}>{this.props.product.name}</span></td>
           <td>${this.props.product.price}</td>
         </tr>
@@ -36,5 +40,6 @@ export default class ProductRow extends Component {
 
 ProductRow.propTypes = {
   product: PropTypes.object,
-  onSelectionInput: PropTypes.func
+  onSelectionInput: PropTypes.func,
+  buttonStyle: PropTypes.string
 }

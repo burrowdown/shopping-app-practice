@@ -18,24 +18,24 @@ describe('when filtering', () => {
   })
 
   it('will render the correct number of table rows', () => {
-    expect(app.find('tr').length).toBe(10)
+    expect(app.find('tr').length).toBe(8)
   })
 
   it('will remove the correct number of table rows when filtered by inStock', () => {
     const event = {target: {checked: true}}
     app.find('#checkbox-inStock').simulate('change', event)
-    expect(app.find('tr').length).toBe(8)
+    expect(app.find('tr').length).toBe(6)
   })
 
   it('will filter out rows by text input "ball"', () => {
     const event = {target: {value: 'ball'}}
     app.find('#searchbar-input').simulate('change', event)
-    expect(app.find('tr').length).toBe(6)
+    expect(app.find('tr').length).toBe(4)
   })
 
   it('will filter out rows by text input "x"', () => {
     const event = {target: {value: 'x'}}
     app.find('#searchbar-input').simulate('change', event)
-    expect(app.find('tr').length).toBe(4)
+    expect(app.find('tr').length).toBe(2)
   })
 })

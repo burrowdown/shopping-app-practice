@@ -3,3 +3,8 @@ body {
   padding: 5px;
   font-family: sans-serif;
 }
+
+td {
+  vertical-align: bottom;
+  padding: 1em;
+}

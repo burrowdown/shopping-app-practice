@@ -1,5 +1,6 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Checkbox, FormControl, Panel } from 'react-bootstrap'
 
 export default class SearchBar extends Component {
   constructor (props) {
@@ -18,22 +19,23 @@ export default class SearchBar extends Component {
 
   render () {
     return (
-      <form>
-        <input
-          id='searchbar-input'
-          type='text'
-          placeholder='Search...'
-          value={this.props.filterText}
-          onChange={this.handleFilterTextInputChange}
-        />
-        <p><input
-          id='checkbox-inStock'
-          type='checkbox'
-          checked={this.props.inStockOnly}
-          onChange={this.handleInStockInputChange}
-        />
-        Only show products in stock</p>
-      </form>
+      <Panel>
+        <form>
+          <FormControl
+            id='searchbar-input'
+            type='text'
+            placeholder='Search...'
+            value={this.props.filterText}
+            onChange={this.handleFilterTextInputChange}
+          />
+          <Checkbox
+            id='checkbox-inStock'
+            checked={this.props.inStockOnly}
+            onChange={this.handleInStockInputChange}
+          >
+          Only show in-stock items</Checkbox>
+        </form>
+      </Panel>
     )
   }
 }

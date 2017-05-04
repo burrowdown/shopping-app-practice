@@ -5,11 +5,11 @@ import ProductTable from './ProductTable'
 import { shallow } from 'enzyme'
 
 /*
-global describe xit beforeEach expect
+global describe it beforeEach expect
  */
 
 describe('ProductTable', () => {
-  describe('onIsBuying', () => {
+  describe('handleSelectionInput', () => {
     let app, wrapper
 
     beforeEach(() => {
@@ -17,14 +17,16 @@ describe('ProductTable', () => {
       app = wrapper.instance()
     })
 
-    xit('properly increments price', () => {
-      app.onSelectionInput('product1', true, 299.99)
+    it('properly increments price', () => {
+      let fakeButton = {bsStyle: 'default'}
+      app.handleSelectionInput(fakeButton, 299.99)
       expect(app.state.selectionTotal).toEqual(299.99)
     })
 
-    xit('properly decrements price', () => {
+    it('properly decrements price', () => {
+      let fakeButton = {bsStyle: 'success'}
       wrapper.setState({total: 299.99})
-      app.onSelectionInput('product1', false, 299.99)
+      app.handleSelectionInput(fakeButton, 299.99)
       expect(app.state.selectionTotal).toEqual(0)
     })
   })

@@ -1,0 +1,97 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _createClass = function () {function defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function (Constructor, protoProps, staticProps) {if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;};}();var _react = require('react');var _react2 = _interopRequireDefault(_react);
+var _ProductRow = require('./ProductRow');var _ProductRow2 = _interopRequireDefault(_ProductRow);
+var _propTypes = require('prop-types');var _propTypes2 = _interopRequireDefault(_propTypes);
+var _reactBootstrap = require('react-bootstrap');function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self, call) {if (!self) {throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call && (typeof call === "object" || typeof call === "function") ? call : self;}function _inherits(subClass, superClass) {if (typeof superClass !== "function" && superClass !== null) {throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;}var
+
+ProductTable = function (_Component) {_inherits(ProductTable, _Component);
+  function ProductTable(props) {_classCallCheck(this, ProductTable);var _this = _possibleConstructorReturn(this, (ProductTable.__proto__ || Object.getPrototypeOf(ProductTable)).call(this,
+    props));
+    _this.state = { selectionTotal: 0 };
+
+    _this.handleSelectionInput = _this.handleSelectionInput.bind(_this);return _this;
+  }_createClass(ProductTable, [{ key: 'handleSelectionInput', value: function handleSelectionInput(
+
+    button, price) {
+      var newTotal = void 0;
+      // TODO: Fix this hacky bullshit, get button color to change when selected
+      if (button.bsStyle === 'btn-default' || button.bsStyle === undefined) {
+        newTotal = this.state.selectionTotal + price;
+        console.log(button);
+        button.bsStyle = 'btn-success';
+      } else {
+        newTotal = this.state.selectionTotal - price;
+        console.log(button);
+        button.bsStyle = 'btn-default';
+      }
+
+      this.setState({
+        selectionTotal: newTotal });
+
+    } }, { key: 'render', value: function render()
+
+    {var _this2 = this;
+      var rows = [];
+      var lastCategory = null;
+
+      this.props.inventory.forEach(function (inventoryRow) {
+        if (inventoryRow.name.indexOf(_this2.props.filterText) === -1 || !inventoryRow.stocked && _this2.props.inStockOnly) {
+          return;
+        }
+
+        if (inventoryRow.category !== lastCategory) {
+          rows.push(_react2.default.createElement(ProductCategoryRow, { category: inventoryRow.category, key: inventoryRow.category }));
+        }
+        lastCategory = inventoryRow.category;
+
+        var keyname = inventoryRow.category + inventoryRow.name;
+
+        rows.push(_react2.default.createElement(_ProductRow2.default, {
+          product: inventoryRow,
+          key: keyname,
+          onSelectionInput: _this2.handleSelectionInput }));
+
+      });
+
+      return (
+        _react2.default.createElement('div', null,
+          _react2.default.createElement(_reactBootstrap.Table, { bordered: true, hover: true },
+            _react2.default.createElement('tbody', null, rows)),
+
+          _react2.default.createElement(ProductPriceTotalRow, { key: 'displayTotal', selectionTotal: this.state.selectionTotal })));
+
+
+    } }]);return ProductTable;}(_react.Component);exports.default = ProductTable;var
+
+
+ProductCategoryRow = function (_Component2) {_inherits(ProductCategoryRow, _Component2);function ProductCategoryRow() {_classCallCheck(this, ProductCategoryRow);return _possibleConstructorReturn(this, (ProductCategoryRow.__proto__ || Object.getPrototypeOf(ProductCategoryRow)).apply(this, arguments));}_createClass(ProductCategoryRow, [{ key: 'render', value: function render()
+    {
+      return (
+        _react2.default.createElement('tr', null,
+          _react2.default.createElement('td', { colSpan: '3' }, _react2.default.createElement('strong', null, this.props.category))));
+
+
+    } }]);return ProductCategoryRow;}(_react.Component);var
+
+
+ProductPriceTotalRow = function (_Component3) {_inherits(ProductPriceTotalRow, _Component3);function ProductPriceTotalRow() {_classCallCheck(this, ProductPriceTotalRow);return _possibleConstructorReturn(this, (ProductPriceTotalRow.__proto__ || Object.getPrototypeOf(ProductPriceTotalRow)).apply(this, arguments));}_createClass(ProductPriceTotalRow, [{ key: 'render', value: function render()
+    {
+      return (
+        _react2.default.createElement(_reactBootstrap.Panel, null,
+          _react2.default.createElement('h4', null, 'Shopping Cart total: $', this.props.selectionTotal)));
+
+
+    } }]);return ProductPriceTotalRow;}(_react.Component);
+
+
+ProductTable.propTypes = {
+  inventory: _propTypes2.default.array,
+  filterText: _propTypes2.default.string,
+  inStockOnly: _propTypes2.default.bool };
+
+
+ProductCategoryRow.propTypes = {
+  category: _propTypes2.default.string };
+
+
+ProductPriceTotalRow.propTypes = {
+  selectionTotal: _propTypes2.default.number };

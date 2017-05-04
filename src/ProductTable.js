@@ -1,22 +1,30 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import ProductRow from './ProductRow'
 import PropTypes from 'prop-types'
+import { Table, Panel } from 'react-bootstrap'
 
 export default class ProductTable extends Component {
   constructor (props) {
     super(props)
-    this.state = {selectionTotal: 0}
+    this.state = {
+      selectionTotal: 0,
+      buttonStyle: 'default'
+    }
 
     this.handleSelectionInput = this.handleSelectionInput.bind(this)
   }
 
-  handleSelectionInput (value, price) {
+  handleSelectionInput (button, price) {
     let newTotal
-
-    if (value) {
+    // TODO: Fix this hacky bullshit, get button color to change when selected
+    if (button.bsStyle === 'default' || button.bsStyle === undefined) {
       newTotal = this.state.selectionTotal + price
+      console.log(button)
+      this.setState({buttonStyle: 'success'})
     } else {
       newTotal = this.state.selectionTotal - price
+      console.log(button)
+      this.setState({buttonStyle: 'default'})
     }
 
     this.setState({
@@ -44,21 +52,17 @@ export default class ProductTable extends Component {
         product={inventoryRow}
         key={keyname}
         onSelectionInput={this.handleSelectionInput}
-            />)
+        buttonStyle={this.state.buttonStyle}
+      />)
     })
-    rows.push(<ProductPriceTotalRow key='displayTotal' selectionTotal={this.state.selectionTotal} />)
 
     return (
-      <table>
-        <thead>
-          <tr>
-            <th />
-            <th>Name</th>
-            <th>Price</th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </table>
+      <div>
+        <Table bordered hover>
+          <tbody>{rows}</tbody>
+        </Table>
+        <ProductPriceTotalRow key='displayTotal' selectionTotal={this.state.selectionTotal} />
+      </div>
     )
   }
 }
@@ -76,17 +80,15 @@ class ProductCategoryRow extends Component {
 class ProductPriceTotalRow extends Component {
   render () {
     return (
-      <tr>
-        <td />
-        <td><h4>Shopping Cart total:</h4></td>
-        <td><h4>${this.props.selectionTotal}</h4></td>
-      </tr>
+      <Panel>
+        <h4>Shopping Cart total: ${this.props.selectionTotal}</h4>
+      </Panel>
     )
   }
 }
 
 ProductTable.propTypes = {
-  inventory: PropTypes.object,
+  inventory: PropTypes.array,
   filterText: PropTypes.string,
   inStockOnly: PropTypes.bool
 }

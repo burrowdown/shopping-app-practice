@@ -1,0 +1,41 @@
+'use strict';var _react = require('react');var _react2 = _interopRequireDefault(_react);
+var _reactDom = require('react-dom');var _reactDom2 = _interopRequireDefault(_reactDom);
+var _App = require('./App');var _App2 = _interopRequireDefault(_App);
+var _enzyme = require('enzyme');function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+/* global it describe expect beforeEach */
+
+it('renders without crashing', function () {
+  var div = document.createElement('div');
+  _reactDom2.default.render(_react2.default.createElement(_App2.default, null), div);
+});
+
+describe('when filtering', function () {
+  var app = void 0;
+
+  beforeEach(function () {
+    app = (0, _enzyme.mount)(_react2.default.createElement(_App2.default, null));
+  });
+
+  it('will render the correct number of table rows', function () {
+    expect(app.find('tr').length).toBe(10);
+  });
+
+  it('will remove the correct number of table rows when filtered by inStock', function () {
+    var event = { target: { checked: true } };
+    app.find('#checkbox-inStock').simulate('change', event);
+    expect(app.find('tr').length).toBe(8);
+  });
+
+  it('will filter out rows by text input "ball"', function () {
+    var event = { target: { value: 'ball' } };
+    app.find('#searchbar-input').simulate('change', event);
+    expect(app.find('tr').length).toBe(6);
+  });
+
+  it('will filter out rows by text input "x"', function () {
+    var event = { target: { value: 'x' } };
+    app.find('#searchbar-input').simulate('change', event);
+    expect(app.find('tr').length).toBe(4);
+  });
+});

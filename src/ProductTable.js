@@ -4,34 +4,6 @@ import PropTypes from 'prop-types'
 import { Table, Panel } from 'react-bootstrap'
 
 export default class ProductTable extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      selectionTotal: 0,
-      buttonStyle: 'default'
-    }
-
-    this.handleSelectionInput = this.handleSelectionInput.bind(this)
-  }
-
-  handleSelectionInput (button, price) {
-    let newTotal
-    // TODO: Fix this hacky bullshit, get button color to change when selected
-    if (button.bsStyle === 'default' || button.bsStyle === undefined) {
-      newTotal = this.state.selectionTotal + price
-      console.log(button)
-      this.setState({buttonStyle: 'success'})
-    } else {
-      newTotal = this.state.selectionTotal - price
-      console.log(button)
-      this.setState({buttonStyle: 'default'})
-    }
-
-    this.setState({
-      selectionTotal: newTotal
-    })
-  }
-
   render () {
     let rows = []
     let lastCategory = null
@@ -50,9 +22,10 @@ export default class ProductTable extends Component {
 
       rows.push(<ProductRow
         product={inventoryRow}
-        key={keyname}
-        onSelectionInput={this.handleSelectionInput}
-        buttonStyle={this.state.buttonStyle}
+        keyname={keyname}
+        onSelectionInput={this.props.onSelectionInput}
+        buttonStyle={this.props.buttonStyle}
+        inCart={this.props.inCart}
       />)
     })
 
@@ -61,7 +34,7 @@ export default class ProductTable extends Component {
         <Table bordered hover>
           <tbody>{rows}</tbody>
         </Table>
-        <ProductPriceTotalRow key='displayTotal' selectionTotal={this.state.selectionTotal} />
+        <ProductPriceTotalRow key='displayTotal' selectionTotal={this.props.selectionTotal} />
       </div>
     )
   }
@@ -90,7 +63,11 @@ class ProductPriceTotalRow extends Component {
 ProductTable.propTypes = {
   inventory: PropTypes.array,
   filterText: PropTypes.string,
-  inStockOnly: PropTypes.bool
+  inStockOnly: PropTypes.bool,
+  onSelectionInput: PropTypes.func,
+  selectionTotal: PropTypes.number,
+  buttonStyle: PropTypes.string,
+  inCart: PropTypes.object
 }
 
 ProductCategoryRow.propTypes = {

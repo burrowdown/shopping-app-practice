@@ -10,16 +10,22 @@ export default class ProductRow extends Component {
 
   handleSelectionInputChange (e) {
     const price = this.props.product.price
-    const button = e.target
-    this.props.onSelectionInput(button, price)
+    const product = this.props.keyname
+    this.props.onSelectionInput(price, product)
   }
 
   render () {
+    let style = 'default'
+    let keys = Object.keys(this.props.inCart)
+    keys.forEach((key) => {
+      if (key === this.props.keyname) {
+        style = 'success'
+      }
+    })
     if (this.props.product.stocked) {
       return (
         <tr>
-          { /* TODO: Fix this function */ }
-          <td><Button onClick={this.handleSelectionInputChange} bsStyle={this.props.buttonStyle} bsSize='small' block>
+          <td><Button onClick={this.handleSelectionInputChange} bsStyle={style} bsSize='small' block>
             Buy This
           </Button></td>
           <td>{this.props.product.name}</td>
@@ -41,5 +47,6 @@ export default class ProductRow extends Component {
 ProductRow.propTypes = {
   product: PropTypes.object,
   onSelectionInput: PropTypes.func,
-  buttonStyle: PropTypes.string
+  keyname: PropTypes.string,
+  inCart: PropTypes.object
 }

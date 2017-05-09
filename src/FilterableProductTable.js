@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import SearchBar from './SearchBar'
 import ProductTable from './ProductTable'
 import PropTypes from 'prop-types'
@@ -9,11 +9,13 @@ export default class FilterableProductTable extends Component {
     this.state = {
       filterText: '',
       inStockOnly: false,
-      selectionTotal: []
+      selectionTotal: 0,
+      buttonStyle: 'default',
+      inCart: {}
     }
-
     this.handleFilterTextInput = this.handleFilterTextInput.bind(this)
     this.handleInStockInput = this.handleInStockInput.bind(this)
+    this.handleSelectionInput = this.handleSelectionInput.bind(this)
   }
 
   handleFilterTextInput (filterText) {
@@ -28,6 +30,24 @@ export default class FilterableProductTable extends Component {
     })
   }
 
+  handleSelectionInput (price, product) {
+    let newTotal
+    let currentCart = Object.assign({}, this.state.inCart)
+
+    if (Object.keys(this.state.inCart).indexOf(product) === -1) {
+      newTotal = this.state.selectionTotal + price
+      currentCart = Object.assign(this.state.inCart, {[product]: price})
+    } else {
+      newTotal = this.state.selectionTotal - price
+      delete currentCart[product]
+    }
+
+    this.setState({
+      selectionTotal: newTotal,
+      inCart: currentCart
+    })
+  }
+
   render () {
     return (
       <section>
@@ -36,12 +56,16 @@ export default class FilterableProductTable extends Component {
           onFilterTextInput={this.handleFilterTextInput}
           inStockOnly={this.state.inStockOnly}
           onInStockInput={this.handleInStockInput}
-                />
+        />
         <ProductTable
           inventory={this.props.inventory}
           filterText={this.state.filterText}
           inStockOnly={this.state.inStockOnly}
-                />
+          onSelectionInput={this.handleSelectionInput}
+          selectionTotal={this.state.selectionTotal}
+          buttonStyle={this.state.buttonStyle}
+          inCart={this.state.inCart}
+        />
       </section>
     )
   }

@@ -8,7 +8,7 @@ export default class ProductRow extends Component {
     this.handleSelectionInputChange = this.handleSelectionInputChange.bind(this)
   }
 
-  handleSelectionInputChange (e) {
+  handleSelectionInputChange () {
     const price = this.props.product.price
     const product = this.props.keyname
     this.props.onSelectionInput(price, product)
@@ -36,7 +36,7 @@ export default class ProductRow extends Component {
       return (
         <tr>
           <td><Button disabled bsSize='small' block>Unavailable</Button></td>
-          <td><span style={{color: 'red'}}>{this.props.product.name}</span></td>
+          <td><span style={{color: 'gray'}}>{this.props.product.name}</span></td>
           <td>${this.props.product.price}</td>
         </tr>
       )

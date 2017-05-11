@@ -1,33 +1,25 @@
 import React from 'react'
-// import ReactDOM from 'react-dom'
 import ProductTable from './ProductTable'
-// import { shallow, mount, render } from 'enzyme'
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 
-/*
-global describe it beforeEach expect
- */
+/* global describe jest it beforeEach expect */
 
 describe('ProductTable', () => {
-  describe('handleSelectionInput', () => {
-    let app, wrapper
-
-    beforeEach(() => {
-      wrapper = shallow(<ProductTable />)
-      app = wrapper.instance()
-    })
-
-    it('properly increments price', () => {
-      let fakeButton = {bsStyle: 'default'}
-      app.handleSelectionInput(fakeButton, 299.99)
-      expect(app.state.selectionTotal).toEqual(299.99)
-    })
-
-    it('properly decrements price', () => {
-      let fakeButton = {bsStyle: 'success'}
-      wrapper.setState({total: 299.99})
-      app.handleSelectionInput(fakeButton, 299.99)
-      expect(app.state.selectionTotal).toEqual(0)
-    })
+  let wrapper
+  let mockInventory = [
+    {category: 'Sporting Goods', price: 49.99, stocked: true, name: 'Football'},
+    {category: 'Sporting Goods', price: 9.99, stocked: true, name: 'Baseball'},
+  ]
+  beforeEach(() => {
+    wrapper = mount(<ProductTable
+      inventory={mockInventory}
+      filterText={''}
+      inStockOnly={true}
+      inCart={{}}
+    />)
+  })
+  it('renders the right number of rows', () => {
+    let rowsCount = wrapper.find('tr').length
+    expect(rowsCount).toBe(3)
   })
 })

@@ -1,0 +1,21 @@
+'use strict';var _react = require('react');var _react2 = _interopRequireDefault(_react);
+var _enzyme = require('enzyme');
+var _FilterableProductTable = require('./FilterableProductTable');var _FilterableProductTable2 = _interopRequireDefault(_FilterableProductTable);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+/* global it describe expect beforeEach jest */
+
+describe('FilterableProductTable', function () {
+  var wrapper = void 0;
+  var mockInventory = [
+  { category: 'Sporting Goods', price: 49.99, stocked: true, name: 'Football' },
+  { category: 'Sporting Goods', price: 9.99, stocked: true, name: 'Baseball' }];
+
+  beforeEach(function () {
+    wrapper = (0, _enzyme.shallow)(_react2.default.createElement(_FilterableProductTable2.default, {
+      inventory: mockInventory }));
+
+  });
+  describe('handleSelectionInput', function () {
+    it('updates the ');
+  });
+});

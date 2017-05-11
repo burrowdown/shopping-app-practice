@@ -1,0 +1,34 @@
+'use strict';var _react = require('react');var _react2 = _interopRequireDefault(_react);
+var _ProductTable = require('./ProductTable');var _ProductTable2 = _interopRequireDefault(_ProductTable);
+
+var _enzyme = require('enzyme');function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+/* global describe jest it beforeEach expect */
+
+describe('ProductTable', function () {
+  describe('handleSelectionInput', function () {
+    var app = void 0,wrapper = void 0;
+    beforeEach(function () {
+      var mockInputHandler = jest.fn();
+      var mockInventory = [{ category: 'Sporting Goods', price: 49.99, stocked: true, name: 'Football' }];
+      wrapper = (0, _enzyme.shallow)(_react2.default.createElement(_ProductTable2.default, {
+        inventory: mockInventory,
+        onSelectionInput: mockInputHandler }));
+
+      app = wrapper.instance();
+    });
+
+    it('properly increments price', function () {
+      var fakeButton = { bsStyle: 'default' };
+      app.onSelectionInput(fakeButton, 299.99);
+      expect(app.state.selectionTotal).toEqual(299.99);
+    });
+
+    it('properly decrements price', function () {
+      var fakeButton = { bsStyle: 'success' };
+      wrapper.setState({ total: 299.99 });
+      app.onSelectionInput(fakeButton, 299.99);
+      expect(app.state.selectionTotal).toEqual(0);
+    });
+  });
+}); // import { shallow, mount, render } from 'enzyme'

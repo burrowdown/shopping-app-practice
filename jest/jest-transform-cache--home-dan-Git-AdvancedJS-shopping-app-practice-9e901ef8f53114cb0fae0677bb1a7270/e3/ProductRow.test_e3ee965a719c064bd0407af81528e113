@@ -1,0 +1,3 @@
+'use strict';var _react = require('react');var _react2 = _interopRequireDefault(_react);
+var _ProductRow = require('./ProductRow');var _ProductRow2 = _interopRequireDefault(_ProductRow);
+var _enzyme = require('enzyme');function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}

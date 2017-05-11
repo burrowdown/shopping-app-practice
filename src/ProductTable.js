@@ -51,6 +51,7 @@ class ProductCategoryRow extends Component {
 }
 
 class ProductPriceTotalRow extends Component {
+  // TODO: Decimal rounding
   render () {
     return (
       <Panel>

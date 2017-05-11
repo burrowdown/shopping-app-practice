@@ -3,16 +3,29 @@ import React, { Component } from 'react'
 import FilterableProductTable from './FilterableProductTable'
 import { Jumbotron, Grid, Col } from 'react-bootstrap'
 
-const INVENTORY = [
-  {category: 'Sporting Goods', price: 49.99, stocked: true, name: 'Football'},
-  {category: 'Sporting Goods', price: 9.99, stocked: true, name: 'Baseball'},
-  {category: 'Sporting Goods', price: 29.99, stocked: false, name: 'Basketball'},
-  {category: 'Electronics', price: 99.99, stocked: true, name: 'iPod Touch'},
-  {category: 'Electronics', price: 399.99, stocked: false, name: 'iPhone 5'},
-  {category: 'Electronics', price: 199.99, stocked: true, name: 'Nexus 7'}
-]
+/* global fetch */
+
+const SERVER_ROOT = 'https://inventory-d0b69.firebaseio.com/'
 
 class App extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      inventory: []
+    }
+  }
+  componentWillMount () {
+    fetch(`${SERVER_ROOT}/catalog.json`)
+      .then((response) => {
+        return response.json()
+      })
+      .then((catalog) => {
+        this.setState({inventory: catalog})
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
   render () {
     return (
       <Grid>
@@ -21,7 +34,7 @@ class App extends Component {
             <h2>Balls and Phones Galore</h2>
           </Jumbotron>
           <FilterableProductTable
-            inventory={INVENTORY}
+            inventory={this.state.inventory}
           />
         </Col>
       </Grid>

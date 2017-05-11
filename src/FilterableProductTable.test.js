@@ -2,13 +2,13 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import FilterableProductTable from './FilterableProductTable'
 
-/* global it describe expect beforeEach jest */
+/* global it describe expect beforeEach */
 
 describe('FilterableProductTable', () => {
   let wrapper, table
   let mockInventory = [
     {category: 'Sporting Goods', price: 49.99, stocked: true, name: 'Football'},
-    {category: 'Sporting Goods', price: 9.99, stocked: true, name: 'Baseball'},
+    {category: 'Sporting Goods', price: 9.99, stocked: true, name: 'Baseball'}
   ]
   beforeEach(() => {
     wrapper = shallow(<FilterableProductTable

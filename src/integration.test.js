@@ -1,20 +1,29 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
-import {mount} from 'enzyme'
+import { mount } from 'enzyme'
+import fetch from 'jest-fetch-mock'
+import { FAKE_INVENTORY } from './test-data.js'
+
+global.fetch = fetch
+fetch.mockResponse(JSON.stringify(FAKE_INVENTORY))
 
 /* global it describe expect beforeEach */
-
-it('renders without crashing', () => {
-  const div = document.createElement('div')
-  ReactDOM.render(<App />, div)
+describe('integration test', () => {
+  it('renders without crashing', () => {
+    const div = document.createElement('div')
+    ReactDOM.render(<App />, div)
+  })
 })
 
 describe('when filtering', () => {
   let app
 
-  beforeEach(() => {
+  beforeEach((done) => {
     app = mount(<App />)
+    setTimeout(() => {
+      done()
+    }, 50)
   })
 
   it('will render the correct number of table rows', () => {

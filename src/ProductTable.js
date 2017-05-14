@@ -2,8 +2,25 @@ import React, { Component } from 'react'
 import ProductRow from './ProductRow'
 import PropTypes from 'prop-types'
 import { Table, Panel } from 'react-bootstrap'
+import EditButton from './EditButton'
 
 export default class ProductTable extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      isEditable: false
+    }
+    this.handleEditableInput = this.handleEditableInput.bind(this)
+  }
+
+  handleEditableInput () {
+    let bool = this.state.isEditable
+    bool = !bool
+    this.setState({
+      isEditable: bool
+    })
+  }
+
   render () {
     let rows = []
     let lastCategory = null
@@ -26,6 +43,7 @@ export default class ProductTable extends Component {
         onSelectionInput={this.props.onSelectionInput}
         buttonStyle={this.props.buttonStyle}
         inCart={this.props.inCart}
+        isEditable={this.state.isEditable}
       />)
     })
 
@@ -35,6 +53,10 @@ export default class ProductTable extends Component {
           <tbody>{rows}</tbody>
         </Table>
         <ProductPriceTotalRow key='displayTotal' selectionTotal={this.props.selectionTotal} />
+        <EditButton
+          isEditable={this.state.isEditable}
+          onEditableChange={this.handleEditableInput}
+        />
       </div>
     )
   }

@@ -22,14 +22,25 @@ export default class ProductRow extends Component {
         style = 'success'
       }
     })
+
+    let priceField
+    if (this.props.isEditable) {
+      priceField = <input className='price-input' />
+    } else {
+      priceField = this.props.product.price
+    }
+
     if (this.props.product.stocked) {
       return (
         <tr>
-          <td><Button onClick={this.handleSelectionInputChange} bsStyle={style} bsSize='small' block>
-            Buy This
-          </Button></td>
+          <td><Button
+            onClick={this.handleSelectionInputChange}
+            bsStyle={style}
+            bsSize='small'
+            block
+          > Buy This </Button></td>
           <td>{this.props.product.name}</td>
-          <td>${this.props.product.price}</td>
+          <td>${priceField}</td>
         </tr>
       )
     } else {
@@ -48,5 +59,6 @@ ProductRow.propTypes = {
   product: PropTypes.object,
   onSelectionInput: PropTypes.func,
   keyname: PropTypes.string,
-  inCart: PropTypes.object
+  inCart: PropTypes.object,
+  isEditable: PropTypes.bool
 }
